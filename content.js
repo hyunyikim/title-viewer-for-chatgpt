@@ -1,3 +1,6 @@
+// TODO: when title is changed
+// TODO: when click on other chat
+
 document.addEventListener('DOMContentLoaded', function () {
   let isContentLoaded = false;
   const titleElements = document.getElementsByTagName('title');
@@ -23,11 +26,13 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('navElement is DIV');
 
             const newTitleElement = document.createElement('div');
-            newTitleElement.textContent = title;
-            // TODO: styling
-            // TODO: text ellipsis
-            newTitleElement.setAttribute('class', `flex items-center gap-2 pr-1 leading-[0]`);
-            // newTitleElement.style.fontWeight = 'bold'; // Optional styling
+            // newTitleElement.textContent = title;
+            newTitleElement.textContent = `hello world, I'm making an Chrome Extension right now, I wonder this is working. How much area it will occupied? hello world, I'm making an Chrome Extension right now, I wonder this is working. How much area it will occupied?`;
+
+            newTitleElement.setAttribute(
+              'class',
+              `block text-ellipsis overflow-hidden whitespace-nowrap flex-1 overflow-hidden items-center gap-2 px-1 text-token-text-secondary`
+            );
 
             const lastNavChildElement = navElement.lastChild;
             if (lastNavChildElement) {
