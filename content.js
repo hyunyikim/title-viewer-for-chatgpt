@@ -1,7 +1,7 @@
-// TODO: when click on other chat
-
 const INITIAL_CHAT_NAME = 'ChatGPT';
 const DETECT_ARTICLE_MAX_COUNT = 3;
+
+let observer = null;
 
 document.addEventListener('DOMContentLoaded', function () {
   const onAddTitleToGnb = (title) => {
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const navElement = document.querySelector('nav');
 
     if (navElement) {
-      const observer = new MutationObserver((mutations) => {
+      observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
           const selectedChatTitle = document.querySelector('nav li .bg-token-sidebar-surface-secondary a > div')?.textContent;
 
@@ -79,7 +79,10 @@ document.addEventListener('DOMContentLoaded', function () {
       clearInterval(detectNavChangeIntervalId);
     }
   }, 500);
+});
 
-  // TODO:
-  //   // observer.disconnect();  // Use this to stop observing if needed
+window.addEventListener('unload', () => {
+  if (observer) {
+    observer.disconnect();
+  }
 });
