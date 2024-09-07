@@ -1,45 +1,49 @@
-// TODO: when title is changed
 // TODO: when click on other chat
 
+const INITIAL_CHAT_NAME = 'ChatGPT';
+
 document.addEventListener('DOMContentLoaded', function () {
-  let isContentLoaded = false;
-  const titleElements = document.getElementsByTagName('title');
+  const onAddTitleToGnb = (title) => {
+    const articles = document.querySelectorAll('article');
+    if (articles?.length > 0) {
+      const gnbElement = articles[0]?.previousElementSibling;
+      console.log('gnbElement', title);
 
-  const intervalId = setInterval(() => {
-    if (titleElements?.length > 0 && !isContentLoaded) {
-      const titleElement = titleElements[0];
-      const title = (titleElement.textContent || '').trim();
-      console.log('title', title);
+      if (gnbElement && gnbElement?.tagName === 'DIV') {
+        console.log('gnbElement is DIV');
 
-      if (title !== 'ChatGPT') {
-        isContentLoaded = true;
-        clearInterval(intervalId);
-
-        // Add title to Nav
-        const articles = document.querySelectorAll('article');
-
-        // TODO: if there is a chat before starting?
-        if (articles?.length > 0) {
-          const navElement = articles[0]?.previousElementSibling;
-          console.log('navElement', navElement);
-          if (navElement && navElement?.tagName === 'DIV') {
-            console.log('navElement is DIV');
-
-            const newTitleElement = document.createElement('div');
-            // newTitleElement.textContent = title;
-            newTitleElement.textContent = `hello world, I'm making an Chrome Extension right now, I wonder this is working. How much area it will occupied? hello world, I'm making an Chrome Extension right now, I wonder this is working. How much area it will occupied?`;
-
-            newTitleElement.setAttribute(
-              'class',
-              `block text-ellipsis overflow-hidden whitespace-nowrap flex-1 overflow-hidden items-center gap-2 px-1 text-token-text-secondary`
-            );
-
-            const lastNavChildElement = navElement.lastChild;
-            if (lastNavChildElement) {
-              navElement.insertBefore(newTitleElement, lastNavChildElement);
-            }
-          }
+        // Already existed title
+        const existedTitleElement = document.querySelector('.chatgpt-chat-title');
+        if (existedTitleElement) {
+          existedTitleElement.textContent = title;
+          return;
         }
+
+        // No title
+        const newTitleElement = document.createElement('div');
+        newTitleElement.textContent = title;
+
+        newTitleElement.setAttribute(
+          'class',
+          `block text-ellipsis overflow-hidden whitespace-nowrap flex-1 overflow-hidden items-center gap-2 px-1 text-token-text-secondary chatgpt-chat-title`
+        );
+        const lastNavChildElement = gnbElement.lastChild;
+        if (lastNavChildElement) {
+          gnbElement.insertBefore(newTitleElement, lastNavChildElement);
+        }
+      }
+    }
+  };
+
+  // after content initially loaded
+  const titleElement = document.querySelector('title');
+  const initialContentLoadIntervalId = setInterval(() => {
+    if (titleElement) {
+      const title = (titleElement?.textContent || '').trim();
+      if (title !== INITIAL_CHAT_NAME) {
+        // Add title to Gnb
+        onAddTitleToGnb(title);
+        clearInterval(initialContentLoadIntervalId);
       }
     }
   }, 500);
