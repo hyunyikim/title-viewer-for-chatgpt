@@ -68,13 +68,12 @@ document.addEventListener('DOMContentLoaded', function () {
       observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
           const selectedChatTitle = document.querySelector('nav li .bg-token-sidebar-surface-secondary a > div')?.textContent;
-
           if (selectedChatTitle) {
             onAddTitleToGnb(selectedChatTitle);
           }
         });
       });
-      observer.observe(navElement, { subtree: true, attributeFilter: ['class'] });
+      observer.observe(navElement, { subtree: true, attributeFilter: ['class'], characterData: true });
 
       clearInterval(detectNavChangeIntervalId);
     }
