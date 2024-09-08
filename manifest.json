@@ -1,18 +1,20 @@
 {
   "manifest_version": 3,
   "name": "Title Viewer for ChatGPT",
+  "description": "Displays the chat title at the top of the screen for ChatGPT",
   "version": "1.0",
-  "description": "Displays the conversation title in ChatGPT even when the sidebar is folded.",
-  "action": {
-    "default_popup": "popup.html",
-    "default_icon": "icon.png"
-  },
-  "permissions": ["activeTab"],
   "content_scripts": [
     {
-      "matches": ["*://*/*"],
+      "matches": ["https://chatgpt.com/*"],
       "js": ["content.js"],
       "run_at": "document_start"
     }
-  ]
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": "icon.png"
+  },
+  "permissions": ["scripting", "activeTab"]
 }

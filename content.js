@@ -85,3 +85,20 @@ window.addEventListener('unload', () => {
     observer.disconnect();
   }
 });
+
+// when clicked icon, show title animation
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.message === 'ICON_CLICKED') {
+    const existedTitleElement = document.querySelector('.chatgpt-chat-title');
+    const existedTitleContent = existedTitleElement?.textContent;
+    let newTitleContent = '';
+    if (existedTitleContent) {
+      for (let i = 0; i < existedTitleContent.length; i++) {
+        setTimeout(() => {
+          newTitleContent += existedTitleContent[i];
+          existedTitleElement.textContent = newTitleContent;
+        }, 50 * i);
+      }
+    }
+  }
+});
